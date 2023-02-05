@@ -1,7 +1,7 @@
 ﻿<process name="CurrencyConversion" version="1.0" bpversion="7.1.2.3518" narrative="Process to convert Currency after reading value from excel and store result in excel again." byrefcollection="true" preferredid="3b554f3e-20cf-489e-94dc-792c2936a44c">
   <view>
     <camerax>0</camerax>
-    <cameray>-42</cameray>
+    <cameray>-63</cameray>
     <zoom version="2">1.25</zoom>
   </view>
   <preconditions />
@@ -55,7 +55,7 @@
     <private />
     <alwaysinit />
   </stage>
-  <stage stageid="8ca946b7-abd7-479d-a183-dd5fb57a93ef" name="GetCollection" type="Action">
+  <stage stageid="8ca946b7-abd7-479d-a183-dd5fb57a93ef" name="GetCollectionfromExcel" type="Action">
     <loginhibit onsuccess="true" />
     <display x="-60" y="-165" />
     <inputs>
@@ -66,11 +66,11 @@
     <outputs>
       <output type="collection" name="Data" friendlyname="Data" narrative="The collection containing the data from the specified worksheet - the column IDs will be gleaned from the first row on the sheet being retrieved." stage="InputCollection" />
     </outputs>
-    <onsuccess>98c6553f-e7e8-4eff-9e79-4bf0812e07aa</onsuccess>
+    <onsuccess>420a4c16-1f3a-4753-9155-07b4ffa58f22</onsuccess>
     <resource object="MS Excel VBO" action="Get Worksheet As Collection" />
   </stage>
   <stage stageid="15ff0597-9b82-43fd-ae36-f3da8bf97e18" name="InputCollection" type="Collection">
-    <display x="555" y="-135" />
+    <display x="555" y="-150" />
     <datatype>collection</datatype>
     <private />
     <alwaysinit />
@@ -139,7 +139,7 @@
   </stage>
   <stage stageid="ac32c264-6789-4790-b9b7-3a9c1bae0512" name="Update Excel" type="Action">
     <loginhibit onsuccess="true" />
-    <display x="-60" y="-45" />
+    <display x="-60" y="90" />
     <inputs>
       <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the specified collection should be written. The default of zero indicates the currently active instance." expr="[handle]" />
       <input type="collection" name="Collection" friendlyname="Collection" narrative="The collection containing the data which should be written to the worksheet." expr="[InputCollection]" />
@@ -153,7 +153,7 @@
   </stage>
   <stage stageid="9c486207-bb7e-4ed3-bd90-bdda8cc0caa1" name="Close Workbook" type="Action">
     <loginhibit onsuccess="true" />
-    <display x="-60" y="30" />
+    <display x="-60" y="150" />
     <inputs>
       <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the workbook which should be closed resides. The default of zero indicates the currently active instance." expr="[handle]" />
       <input type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name of the workbook which should be closed." expr="[WorkBookName]" />
@@ -164,12 +164,12 @@
   </stage>
   <stage stageid="c9a69e01-f1df-4a06-993e-48f166554265" name="Anchor4" type="Anchor">
     <loginhibit onsuccess="true" />
-    <display x="30" y="-45" w="10" h="10" />
-    <onsuccess>ac32c264-6789-4790-b9b7-3a9c1bae0512</onsuccess>
+    <display x="30" y="-105" w="10" h="10" />
+    <onsuccess>fe4959be-5446-4e8d-809f-8b4cc8c2e4ba</onsuccess>
   </stage>
   <stage stageid="734503d8-deb1-4764-8f1e-1f3d454f13b8" name="Anchor5" type="Anchor">
     <loginhibit onsuccess="true" />
-    <display x="30" y="270" w="10" h="10" />
+    <display x="30" y="225" w="10" h="10" />
     <onsuccess>c9a69e01-f1df-4a06-993e-48f166554265</onsuccess>
   </stage>
   <stage stageid="d189a131-72b9-441b-a56f-d34ab2330822" name="Close Browser" type="Action">
@@ -177,5 +177,60 @@
     <display x="105" y="150" />
     <onsuccess>d36b4167-a376-4099-933a-16421ba21c54</onsuccess>
     <resource object="XECurrencyConverter" action="Close Browser" />
+  </stage>
+  <stage stageid="fe4959be-5446-4e8d-809f-8b4cc8c2e4ba" name="Delete Currency Column" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="-105" />
+    <inputs>
+      <input type="collection" name="Input Collection" friendlyname="Input Collection" narrative="The collection from which you want to delete a column from" expr="[InputCollection]" />
+      <input type="text" name="Column Name" friendlyname="Column Name" narrative="The column number to delete" expr="&quot;Currency&quot;" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Output Collection" friendlyname="Output Collection" narrative="A collection with a column removed" stage="InputCollection" />
+      <output type="flag" name="Success" friendlyname="Success" stage="" />
+      <output type="text" name="Error Message" friendlyname="Error Message" stage="" />
+    </outputs>
+    <onsuccess>b6b0b7e8-681e-43c5-9537-85ff209a5ab6</onsuccess>
+    <resource object="Utility - Collection Manipulation" action="Delete Column" />
+  </stage>
+  <stage stageid="b6b0b7e8-681e-43c5-9537-85ff209a5ab6" name="Delete INR Column" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="-60" />
+    <inputs>
+      <input type="collection" name="Input Collection" friendlyname="Input Collection" narrative="The collection from which you want to delete a column from" expr="[InputCollection]" />
+      <input type="text" name="Column Name" friendlyname="Column Name" narrative="The column number to delete" expr="&quot;INR&quot;" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Output Collection" friendlyname="Output Collection" narrative="A collection with a column removed" stage="InputCollection" />
+      <output type="flag" name="Success" friendlyname="Success" stage="" />
+      <output type="text" name="Error Message" friendlyname="Error Message" stage="" />
+    </outputs>
+    <onsuccess>6a980aef-bdde-4ed2-81fc-8f89b4db5438</onsuccess>
+    <resource object="Utility - Collection Manipulation" action="Delete Column" />
+  </stage>
+  <stage stageid="6a980aef-bdde-4ed2-81fc-8f89b4db5438" name="Delete Amount Column" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-60" y="-15" />
+    <inputs>
+      <input type="collection" name="Input Collection" friendlyname="Input Collection" narrative="The collection from which you want to delete a column from" expr="[InputCollection]" />
+      <input type="text" name="Column Name" friendlyname="Column Name" narrative="The column number to delete" expr="&quot;Amount&quot;" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Output Collection" friendlyname="Output Collection" narrative="A collection with a column removed" stage="InputCollection" />
+      <output type="flag" name="Success" friendlyname="Success" stage="" />
+      <output type="text" name="Error Message" friendlyname="Error Message" stage="" />
+    </outputs>
+    <onsuccess>ac32c264-6789-4790-b9b7-3a9c1bae0512</onsuccess>
+    <resource object="Utility - Collection Manipulation" action="Delete Column" />
+  </stage>
+  <stage stageid="420a4c16-1f3a-4753-9155-07b4ffa58f22" name="Anchor1" type="Anchor">
+    <loginhibit onsuccess="true" />
+    <display x="30" y="-165" w="10" h="10" />
+    <onsuccess>60c25a56-c709-4fa3-984a-72dc2c679852</onsuccess>
+  </stage>
+  <stage stageid="60c25a56-c709-4fa3-984a-72dc2c679852" name="Anchor2" type="Anchor">
+    <loginhibit onsuccess="true" />
+    <display x="30" y="-300" w="10" h="10" />
+    <onsuccess>98c6553f-e7e8-4eff-9e79-4bf0812e07aa</onsuccess>
   </stage>
 </process>
